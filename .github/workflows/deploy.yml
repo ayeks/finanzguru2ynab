@@ -6,7 +6,7 @@ on:
       - main # Change this to the branch you want to deploy
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -23,14 +23,6 @@ jobs:
 
     - name: Build Vue app
       run: npm run build
-
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build
-
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
 
     - name: Deploy to GitHub Pages
       uses: JamesIves/github-pages-deploy-action@4.1.4
