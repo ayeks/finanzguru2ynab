@@ -1,35 +1,47 @@
 <template>
-  <div id="app">
-
+  <div id="app" class="container">
+    <h1>Finanzguru 2 YNAB</h1>
     <div>
-      <label for="account">Account:</label>
-      <input type="text" v-model="string_account" />
+      <img src="/favicon.png" alt="Money with Wings">
     </div>
-    
     <div>
-      <label for="date">Date:</label>
-      <input type="text" v-model="string_date" />
-    </div>
-    
-    <div>
-      <label for="payee">Payee:</label>
-      <input type="text" v-model="string_payee" />
-    </div>
-    
-    <div>
-      <label for="memo">Memo:</label>
-      <input type="text" v-model="string_memo" />
-    </div>
-    
-    <div>
-      <label for="amount">Amount:</label>
-      <input type="text" v-model="string_amount" />
+      <p>
+        Transform a <a href="https://hilfe.finanzguru.de/de/articles/3728782-exportiere-deine-umsatze-und-analysen" target="_blank" rel="noopener noreferrer">Finanzguru Excel Export</a>
+        into multiple CSV files by account name that can be <a href="https://support.ynab.com/en_us/file-based-import-a-guide-Bkj4Sszyo" target="_blank" rel="noopener noreferrer">imported in YNAB</a>.<br>
+        Everything happens in your local browser, no data is sent anywhere! 
+      </p>
     </div>
 
     <div>
-      <input type="file" id="fileInput"/>
+      <h3 class="title">Column Name Mapping</h3>
+      <p>Change only if you want to map different collumns of the XLSX to the CSV files or if your export is not in German:</p>
     </div>
-    <button @click="handleFileUpload">Start File Upload</button>
+    <table>
+      <thead>
+        <tr>
+          <th>Account</th>
+          <th>Date</th>
+          <th>Payee</th>
+          <th>Memo</th>
+          <th>Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><input type="text" v-model="string_account" /></td>
+          <td><input type="text" v-model="string_date" /></td>
+          <td><input type="text" v-model="string_payee" /></td>
+          <td><input type="text" v-model="string_memo" /></td>
+          <td><input type="text" v-model="string_amount" /></td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <div>
+      <label for="fileInput" class="button file-label">Select a Finanzguru XLSX file to generate YNAB CSV files</label>
+      <input @change="handleFileUpload" class="hidden" type="file" id="fileInput" accept=".xlsx" hidden/>
+    </div>
+
   </div>
 </template>
 
