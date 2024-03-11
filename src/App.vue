@@ -1,7 +1,5 @@
 <template>
   <div id="app" class="container">
-
-
     <div>
       <h3 class="title">Column Name Mapping</h3>
       <p>Change only if you want to map different collumns of the XLSX to the CSV files or if your export is not in German:</p>
@@ -146,18 +144,3 @@ export default {
   },
 };
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-
-button {
-  margin-top: 20px;
-  padding: 10px 20px;
-  font-size: 16px;
-}
-</style>
