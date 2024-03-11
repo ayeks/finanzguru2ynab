@@ -2,7 +2,7 @@
   <div id="app" class="container">
     <h1>Finanzguru 2 YNAB</h1>
     <div>
-      <img src="/favicon.png" alt="Money with Wings">
+      <img src="<%= BASE_URL %>favicon.png" alt="Money with Wings">
     </div>
     <div>
       <p>
