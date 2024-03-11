@@ -1,16 +1,6 @@
 <template>
   <div id="app" class="container">
-    <h1>Finanzguru 2 YNAB</h1>
-    <div>
-      <img src="<%= BASE_URL %>favicon.png" alt="Money with Wings">
-    </div>
-    <div>
-      <p>
-        Transform a <a href="https://hilfe.finanzguru.de/de/articles/3728782-exportiere-deine-umsatze-und-analysen" target="_blank" rel="noopener noreferrer">Finanzguru Excel Export</a>
-        into multiple CSV files by account name that can be <a href="https://support.ynab.com/en_us/file-based-import-a-guide-Bkj4Sszyo" target="_blank" rel="noopener noreferrer">imported in YNAB</a>.<br>
-        Everything happens in your local browser, no data is sent anywhere! 
-      </p>
-    </div>
+
 
     <div>
       <h3 class="title">Column Name Mapping</h3>
