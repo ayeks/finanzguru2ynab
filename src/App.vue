@@ -1,20 +1,9 @@
 <template>
   <div id="app" class="container">
-    <h1>Finanzguru 2 YNAB</h1>
-    <div>
-      <img src="/favicon.png" alt="Money with Wings">
-    </div>
-    <div>
-      <p>
-        Transform a <a href="https://hilfe.finanzguru.de/de/articles/3728782-exportiere-deine-umsatze-und-analysen" target="_blank" rel="noopener noreferrer">Finanzguru Excel Export</a>
-        into multiple CSV files by account name that can be <a href="https://support.ynab.com/en_us/file-based-import-a-guide-Bkj4Sszyo" target="_blank" rel="noopener noreferrer">imported in YNAB</a>.<br>
-        Everything happens in your local browser, no data is sent anywhere! 
-      </p>
-    </div>
-
     <div>
       <h3 class="title">Column Name Mapping</h3>
-      <p>Change only if you want to map different collumns of the XLSX to the CSV files or if your export is not in German:</p>
+      <p>Change only if you want to map different collumns of the XLSX to the CSV files or if your export is not in
+        German:</p>
     </div>
     <table>
       <thead>
@@ -36,10 +25,10 @@
         </tr>
       </tbody>
     </table>
-    
+
     <div>
       <label for="fileInput" class="button file-label">Select a Finanzguru XLSX file to generate YNAB CSV files</label>
-      <input @change="handleFileUpload" class="hidden" type="file" id="fileInput" accept=".xlsx" hidden/>
+      <input @change="handleFileUpload" class="hidden" type="file" id="fileInput" accept=".xlsx" hidden />
     </div>
 
   </div>
@@ -48,6 +37,7 @@
 <script>
 import * as XLSX from "xlsx";
 import * as Papa from "papaparse";
+import Swal from 'sweetalert2';
 
 export default {
   data() {
@@ -61,19 +51,32 @@ export default {
   },
   methods: {
 
+    // Error handling
+    showErrorDialog(errorMessage) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: errorMessage,
+      });
+    },
+
+    // Trigger parsing on file upload
     handleFileUpload() {
       const fileInput = document.getElementById("fileInput");
       const file = fileInput.files[0];
 
       if (!file) {
-        // Handle the case where no file is selected
-        console.error("No file selected.");
+        this.showErrorDialog(`No file selected.`);
         return;
       }
-
-      this.readFile(file);
+      try {
+        this.readFile(file);
+      } catch (error) {
+        this.showErrorDialog(`Error processing Excel data: ${error.message}`);
+      }
     },
 
+    // Read in the Excel file
     readFile(file) {
       const reader = new FileReader();
 
@@ -85,15 +88,13 @@ export default {
       reader.readAsArrayBuffer(file);
     },
 
+    // Parse the Excel file
     processExcelData(data) {
       const workbook = XLSX.read(data, { type: "array" });
       const sheet = workbook.Sheets[workbook.SheetNames[0]];
       const jsonData = XLSX.utils.sheet_to_json(sheet, {
         raw: false, // This ensures that dates are parsed as JavaScript Date objects
       });
-
-      // Extract headers
-      const headers = Object.keys(jsonData[0]);
 
       // Set default values if not provided
       const {
@@ -103,17 +104,6 @@ export default {
         string_memo,
         string_amount,
       } = this;
-
-      // Rename columns
-      headers.forEach((header) => {
-        sheet[header] = this.renameColumn(sheet[header], {
-          [string_account]: "Account",
-          [string_date]: "Date",
-          [string_payee]: "Payee",
-          [string_memo]: "Memo",
-          [string_amount]: "Amount",
-        });
-      });
 
       // Group by account using reduce
       const grouped = jsonData.reduce((acc, item) => {
@@ -138,14 +128,10 @@ export default {
       });
     },
 
-    renameColumn(column, mapping) {
-      return mapping[column] || column;
-    },
-
+    // Trigger CSV download
     downloadCSV(data, filename) {
       const csvContent = Papa.unparse(data);
       const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
-
       const link = document.createElement("a");
       link.setAttribute("href", URL.createObjectURL(blob));
       link.setAttribute("download", `${filename}.csv`);
@@ -156,18 +142,3 @@ export default {
   },
 };
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-
-button {
-  margin-top: 20px;
-  padding: 10px 20px;
-  font-size: 16px;
-}
-</style>

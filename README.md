@@ -6,21 +6,25 @@ Transform a [Finanzguru Excel Export](https://hilfe.finanzguru.de/de/articles/37
 Everything happens in your local browser, no data is sent anywhere! 
 
 ## Project setup
+
 ```
 npm install
 ```
 
 ### Compiles and hot-reloads for development
+
 ```
 npm run serve
 ```
 
 ### Compiles and minifies for production
+
 ```
 npm run build
 ```
 
 ### Lints and fixes files
+
 ```
 npm run lint
 ```
@@ -28,7 +32,14 @@ npm run lint
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
+## Contributing
 
-### Attribution
+Create [pull requests](https://github.com/ayeks/finanzguru2ynab/pulls) with your changes or create [issues](https://github.com/ayeks/finanzguru2ynab/issues) for questions and requests.
+
+## Attribution
 
 - Money with wings favicon from [Twemoji](https://github.com/twitter/twemoji)
+
+## License
+
+Licensed under the [MIT License](LICENSE).
